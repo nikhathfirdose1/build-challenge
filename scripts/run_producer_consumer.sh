@@ -6,7 +6,7 @@ source .venv/bin/activate 2>/dev/null || true
 
 if [ "$#" -eq 0 ]; then
   python -m src.producer_consumer.runner \
-    --items 15 \
+    --items 50 \
     --buffer-capacity 5 \
     --producers 2 \
     --consumers 3 \
