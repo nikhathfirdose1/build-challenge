@@ -178,7 +178,7 @@ All functions accept iterables of `SaleRecord` and return new values without sid
 ## Sample Output Screenshots
 
 ![Producer-consumer CLI run](images/producer-consumer-test.png)
-*Producer–consumer helper script showing a 15-item run (2 producers, 2 consumers).*
+*Producer–consumer helper script showing a 15-item run (2 producers, 3 consumers).*
 
 ![Sales analysis CLI run](images/sales-analysis-test.png)
 *Sales analysis helper script filtered to March 2024 with the top five products.*
