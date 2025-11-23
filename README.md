@@ -68,7 +68,13 @@ Optional flags let you explore different workloads without editing code:
 
 ```bash
 python -m src.producer_consumer.runner --items 30 --buffer-capacity 6 --producers 2 --consumers 3 --delay 0.0
-# or use the helper script
+```
+
+Helper script (runs with a baked-in 50-item scenario if no args are provided):
+
+```bash
+./scripts/run_producer_consumer.sh
+# or pass your own flags:
 ./scripts/run_producer_consumer.sh --items 30 --buffer-capacity 6 --producers 2 --consumers 3 --delay 0.0
 ```
 
@@ -82,7 +88,13 @@ Optional flags let you tailor the analytics output:
 
 ```bash
 python -m src.sales_analysis.runner --top-n 3 --month 2024-01
-# or use the helper script
+```
+
+Helper script (runs a March 2024 + top 5 snapshot if no args are provided):
+
+```bash
+./scripts/run_sales_analysis.sh
+# or pass your own flags:
 ./scripts/run_sales_analysis.sh --top-n 3 --month 2024-01
 ```
 
@@ -152,40 +164,7 @@ Analytics exposed via `src/sales_analysis/analytics.py`:
 
 All functions accept iterables of `SaleRecord` and return new values without side effects.
 
-## Sample Output
-
-Producer–consumer log:
-
-```
-[ProducerConsumer] Demo configuration -> 8 items, buffer capacity=4
-[ProducerConsumer] Launching producer/consumer threads...
-[ProducerConsumer] Consumer received item='A101' (buffer size 3)
-...
-[ProducerConsumer] Produced 8 items; destination now has 8 items
-[ProducerConsumer] Consumed sequence: ['A101', 'A102', 'A103', 'B201', 'B202', 'C301', 'C302', 'C303']
-```
-
-Sales analysis log:
-
-```
-[SalesAnalysis] Loading dataset from /path/to/data/sales_sample.csv
-[SalesAnalysis] Loaded 9,994 rows; generating analytics log...
-[SalesAnalysis] ==== Aggregate Metrics ====
-[SalesAnalysis] Total sales: $1,674,321.45
-[SalesAnalysis] Total quantity sold: 9,842 units
-[SalesAnalysis] Average discount: 24.12%
-[SalesAnalysis] Average profit: $68.55
-[SalesAnalysis] ==== Grouped Views ====
-[SalesAnalysis] Sales by region: {'Central': 456123.42, 'East': 398221.55, 'South': 375110.87, 'West': 444865.61}
-...
-[SalesAnalysis] ==== Rankings & Trends ====
-[SalesAnalysis] Top 5 products by sales: [('Apple iPhone 5C', 699.93), ('Global Deluxe High-Back Manager's Chair', 915.14), ...]
-[SalesAnalysis] Monthly sales (YYYY-MM): {'2019-01': 540123.12, '2019-02': 556444.01, '2019-03': 577754.32}
-```
-
-(Exact figures depend on `data/sales_sample.csv`.)
-
-## Screenshots
+## Sample Output Screenshots
 
 Visual proof of the tested runs is available under `images/`:
 
