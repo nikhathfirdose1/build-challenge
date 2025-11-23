@@ -9,13 +9,13 @@ This repository delivers two production-style Python assignments, built to demon
 
 ### Key Features & Deliverables
 
-- ✅ **Complete Python source** for both assignments under `src/`.
-- ✅ **Bounded buffer implementation** with producer/consumer threads, configurable capacity, and descriptive logging.
-- ✅ **Functional analytics suite** covering totals, averages, grouped aggregations, rankings, and monthly summaries.
-- ✅ **Unit tests** (`pytest`) for every analytics function and the producer–consumer workflow.
-- ✅ **Rich CLI logs** that can be shared with teammates; piping via `tee` captures the full narrative and fulfills the “print all analyses to console” requirement.
-- ✅ **README documentation** with setup, execution instructions, dataset schema, and sample outputs.
-- ✅ **Dataset provenance**: Superstore Dataset 2014–2024 from Kaggle (see link below).
+- **Complete Python source** for both assignments under `src/`.
+- **Bounded buffer implementation** with producer/consumer threads, configurable capacity, and descriptive logging.
+-  **Functional analytics suite** covering totals, averages, grouped aggregations, rankings, and monthly summaries.
+- **Unit tests** (`pytest`) for every analytics function and the producer–consumer workflow.
+- **Rich CLI logs** that can be shared with teammates; piping via `tee` captures the full narrative and fulfills the “print all analyses to console” requirement.
+- **README documentation** with setup, execution instructions, dataset schema, and sample outputs.
+-  **Dataset provenance**: Superstore Dataset 2014–2024 from Kaggle (see link below).
 
 ## Tech Stack
 
@@ -184,4 +184,12 @@ Sales analysis log:
 ```
 
 (Exact figures depend on `data/sales_sample.csv`.)
+
+## Screenshots
+
+Visual proof of the tested runs is available under `images/`:
+
+![Producer-consumer CLI run](images/producer-consumer-test.png)
+
+![Sales analysis CLI run](images/sales-analysis-test.png)
 
