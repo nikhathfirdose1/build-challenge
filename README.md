@@ -170,3 +170,5 @@ All functions accept iterables of `SaleRecord` and return new values without sid
 
 ![Sales analysis CLI run](images/sales-analysis-test.png)
 
+![Test Case Covergae](images/test-cases.png)
+
