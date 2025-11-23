@@ -184,5 +184,5 @@ All functions accept iterables of `SaleRecord` and return new values without sid
 *Sales analysis helper script filtered to March 2024 with the top five products.*
 
 ![Test Case Covergae](images/test-cases.png)
-*Test Cases Coverage*
+*Test Cases*
 
