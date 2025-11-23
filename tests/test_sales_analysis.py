@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 from datetime import date
+from pathlib import Path
+
+import pytest
 
 from src.sales_analysis.analytics import (
     average_discount,
@@ -15,6 +18,7 @@ from src.sales_analysis.analytics import (
     total_sales,
 )
 from src.sales_analysis.models import SaleRecord
+from src.sales_analysis.reader import read_sales_csv
 
 
 def _make_record(**overrides: object) -> SaleRecord:
@@ -114,4 +118,22 @@ def test_top_n_products_by_sales() -> None:
 def test_monthly_sales() -> None:
     records = _sample_records()
     assert monthly_sales(records) == {"2019-01": 650.0}
+
+
+def test_read_sales_csv_handles_bom_and_missing_dates(tmp_path: Path) -> None:
+    header = "\ufeffRow ID,Order ID,Order Date,Ship Date,Ship Mode,Customer ID,Customer Name,Segment,Country,City,State,Postal Code,Region,Product ID,Category,Sub-Category,Product Name,Sales,Quantity,Discount,Profit\n"
+    row_one = "1,CA-2019-0001,,03/01/2019,Standard Class,C1,Carol,Consumer,United States,Seattle,Washington,98101,West,OFF-PA-1,Office Supplies,Paper,Paper A,100.0,2,0.1,30.0\n"
+    row_two = "2,CA-2019-0002,03/15/2019,03/16/2019,Second Class,C2,Cameron,Corporate,United States,Denver,Colorado,80014,West,TEC-PH-1,Technology,Phones,Phone B,250.5,1,0,70.25\n"
+    path = tmp_path / "sample.csv"
+    path.write_text(header + row_one + row_two, encoding="utf-8")
+
+    records = read_sales_csv(path)
+    assert len(records) == 2
+    first, second = records
+    assert first.order_date is None
+    assert first.ship_date == date(2019, 3, 1)
+    assert second.order_date == date(2019, 3, 15)
+    assert second.ship_date == date(2019, 3, 16)
+    assert second.sales == pytest.approx(250.5)
+    assert first.quantity == 2
 

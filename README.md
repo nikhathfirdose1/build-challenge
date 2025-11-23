@@ -166,8 +166,6 @@ All functions accept iterables of `SaleRecord` and return new values without sid
 
 ## Sample Output Screenshots
 
-Visual proof of the tested runs is available under `images/`:
-
 ![Producer-consumer CLI run](images/producer-consumer-test.png)
 
 ![Sales analysis CLI run](images/sales-analysis-test.png)
