@@ -12,6 +12,7 @@ from src.producer_consumer.runner import run_demo
 
 
 def test_all_items_are_consumed() -> None:
+    """End-to-end sanity check: one producer + consumer moves all items."""
     source_items = list(range(10))
     sentinel = object()
     buffer: BoundedBuffer[object] = BoundedBuffer(capacity=3)
@@ -29,6 +30,7 @@ def test_all_items_are_consumed() -> None:
 
 
 def test_buffer_blocks_when_full() -> None:
+    """Producer should block when buffer at capacity until consumer frees space."""
     buffer: BoundedBuffer[int] = BoundedBuffer(capacity=1)
     buffer.put(1)
 
@@ -49,6 +51,7 @@ def test_buffer_blocks_when_full() -> None:
 
 
 def test_get_blocks_until_item_available() -> None:
+    """Consumer thread blocks on empty buffer until producer provides data."""
     buffer: BoundedBuffer[int] = BoundedBuffer(capacity=1)
     consumed: list[int] = []
     consumed_event = threading.Event()
@@ -69,6 +72,7 @@ def test_get_blocks_until_item_available() -> None:
 
 
 def test_notify_wakes_waiting_threads_on_put_and_get() -> None:
+    """Ensure notify_all wakes both waiting consumer and producer threads."""
     buffer: BoundedBuffer[int] = BoundedBuffer(capacity=1)
     put_finished = threading.Event()
     get_finished = threading.Event()
@@ -95,6 +99,7 @@ def test_notify_wakes_waiting_threads_on_put_and_get() -> None:
 
 
 def test_waiting_producers_resume_after_consumers_free_space() -> None:
+    """Multiple blocked producers should resume once consumers create capacity."""
     buffer: BoundedBuffer[int] = BoundedBuffer(capacity=2)
     buffer.put(1)
     buffer.put(2)
@@ -128,6 +133,7 @@ def test_waiting_producers_resume_after_consumers_free_space() -> None:
 
 
 def test_multiple_producers_multiple_consumers() -> None:
+    """Verify two producers + two consumers exchange all items exactly once."""
     buffer: BoundedBuffer[object] = BoundedBuffer(capacity=4)
     sentinel = object()
     destination: list[str] = []
@@ -161,11 +167,13 @@ def test_multiple_producers_multiple_consumers() -> None:
 
 
 def test_buffer_rejects_non_positive_capacity() -> None:
+    """Construction should fail when capacity is zero or negative."""
     with pytest.raises(ValueError):
         BoundedBuffer(0)
 
 
 def test_run_demo_single_producer_single_consumer() -> None:
+    """Deterministic run_demo call with defaults yields ordered destination list."""
     consumed = run_demo(
         item_count=6,
         buffer_capacity=2,
@@ -178,6 +186,7 @@ def test_run_demo_single_producer_single_consumer() -> None:
 
 
 def test_run_demo_multiple_producers_multiple_consumers() -> None:
+    """run_demo with multiple workers still returns unique items."""
     consumed = run_demo(
         item_count=20,
         buffer_capacity=4,
@@ -190,6 +199,7 @@ def test_run_demo_multiple_producers_multiple_consumers() -> None:
 
 
 def test_run_demo_correct_item_counts_no_deadlock() -> None:
+    """Larger workload confirms run_demo finishes and preserves counts/order."""
     total_items = 30
     consumed = run_demo(
         item_count=total_items,
@@ -203,6 +213,7 @@ def test_run_demo_correct_item_counts_no_deadlock() -> None:
 
 
 def test_run_demo_does_not_deadlock_under_load() -> None:
+    """Stress run_demo in a separate thread and ensure it completes."""
     result_container: list[list[str]] = []
 
     def run() -> None:

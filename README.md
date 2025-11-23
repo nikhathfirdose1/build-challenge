@@ -58,13 +58,20 @@ pip install -r requirements.txt
 
 ## Running the Demos
 
-Producer–consumer demo:
+### Producer–consumer demo:
 
 ```bash
 python -m src.producer_consumer.runner
 ```
 
 Optional flags let you explore different workloads without editing code:
+
+- `--items`: total number of payload items to move from producer(s) to consumer(s).
+- `--buffer-capacity`: the bounded buffer size (demonstrates blocking when full).
+- `--producers`: number of producer threads.
+- `--consumers`: number of consumer threads.
+- `--delay`: optional sleep (seconds) after each `put`; useful to visualize interleaving.
+
 
 ```bash
 python -m src.producer_consumer.runner --items 30 --buffer-capacity 6 --producers 2 --consumers 3 --delay 0.0
@@ -74,11 +81,15 @@ Helper script (runs with a baked-in 50-item scenario if no args are provided):
 
 ```bash
 ./scripts/run_producer_consumer.sh
-# or pass your own flags:
+```
+
+Pass any of the flags above to override the defaults:
+
+```bash
 ./scripts/run_producer_consumer.sh --items 30 --buffer-capacity 6 --producers 2 --consumers 3 --delay 0.0
 ```
 
-Sales analysis demo:
+### Sales analysis demo:
 
 ```bash
 python -m src.sales_analysis.runner
@@ -167,8 +178,11 @@ All functions accept iterables of `SaleRecord` and return new values without sid
 ## Sample Output Screenshots
 
 ![Producer-consumer CLI run](images/producer-consumer-test.png)
+*Producer–consumer helper script showing a 50-item run (2 producers, 2 consumers).*
 
 ![Sales analysis CLI run](images/sales-analysis-test.png)
+*Sales analysis helper script filtered to March 2024 with the top five products.*
 
 ![Test Case Covergae](images/test-cases.png)
+*Test Cases Coverage*
 
